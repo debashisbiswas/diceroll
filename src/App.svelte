@@ -5,12 +5,16 @@
     let dice1 = 0;
     let dice2 = 0;
 
+    // Value used to always trigger transition in `key` block.
+    let transitionTrigger = false;
+
     function rollDie(sides: number): number {
         return Math.floor(Math.random() * sides + 1);
     }
 
     function roll() {
         hasRolled = true;
+        transitionTrigger = !transitionTrigger;
         dice1 = rollDie(6);
         dice2 = rollDie(6);
     }
@@ -21,7 +25,7 @@
 <main>
     <h1>Dice Roller</h1>
 
-    {#key [dice1, dice2, total]}
+    {#key transitionTrigger}
         <div
             id="results"
             style:visibility={hasRolled ? "visible" : "hidden"}
